@@ -1,3 +1,5 @@
+import { expect } from "@playwright/test";
+
 type Crawler = {
     section: {
         title: string,
@@ -19,18 +21,81 @@ type Crawler = {
 }
 class CrawlerGenerate {
     constructor() { }
+    detectBasicTypeElements() {
+        return {
+            "section.title": "string",
+            "section.id": "string",
+            "section.product": {
+                "section.product.id": "string",
+                "section.product.name": "string",
+                "section.product.link": "string",
+                "section.product.language": "string",
+            }
+        }
+    }
+    hasDiscountPricing() {
+        return {"section.product.price.currency": "string"}
+    }
+    hasColorPicker() {
+        return {
+            "section.product.colourPicker.hasColourPicker": "boolean"
+        }
+    }
 
-    detectBasicTypeElements() {}
-    hasDiscountPricing() {}
-    hasColorPicker() {}
-    buildsType() {}
+    buildsType() {
+        return Object.assign({},this.detectBasicTypeElements(),{"section.product": Object.assign({},
+           this.detectBasicTypeElements()["section.product"], this.hasColorPicker(),this.hasDiscountPricing())})
+    }
+    //     "section.title": "string",
+    //     "section.id": "string",
+    //     "section.product": {
+    //         "section.product.id": "string",
+    //         "section.product.name": "string",
+    //         "section.product.link": "string",
+    //         "section.product.language": "string",
+    //         "section.product.colourPicker.hasColourPicker": "boolean",
+    //         "section.product.price.currency": "string"
+    //     }
+    // }
+
+    validate(combined: basicElements): boolean {
+        const valid = this.buildsType();
+        return Object.keys(combined).every(key => {
+            key in valid && typeof combined[key] === valid[key];
+        })
+    }
 }
-//generic without sales and with 1 colorPicker
 
 type PrefixForFlat = string
-type FLAT<T, PrefixForFlat> = T extends object ? FLAT<T extends "" ? T[keyof T] : "",PrefixForFlat> : T
+type FLAT<T, PrefixForFlat> = T extends object ? FLAT<T extends "" ? T[keyof T] : "", PrefixForFlat> : T
 type Prefix = string
-type GWS1C<T, Prefix extends string = ''> = T extends object ? {[K in keyof T]: GWS1C<T[K],K extends string ? `${Prefix extends "" ? K  : `${Prefix}.${K}`}`:"">}[keyof T]: Prefix 
+type GWS1C<T, Prefix extends string = ''> = T extends object ? { [K in keyof T]: GWS1C<T[K], K extends string ? `${Prefix extends "" ? K : `${Prefix}.${K}`}` : ""> }[keyof T] : Prefix
 type tryGW = GWS1C<Crawler, "">
-type withoutColorPickerAndDiscount = Exclude<tryGW,{hasColourPicker: "section.product.colourPicker.hasColourPicker",hasDiscount: "section.product.price.hasDiscount"}>
-type withoutDiscount = Exclude<tryGW,{hasColourPicker: "section.product.colourPicker.hasColourPicker"}>
+type withoutColorPickerAndDiscount = Exclude<tryGW, | "section.product.colourPicker.hasColourPicker" | "section.product.price.hasDiscount">
+type withoutDiscount = Exclude<tryGW, | "section.product.price.hasDiscount">
+
+type productData = Record<string, string | number | boolean>;
+type basicElements = Record<string, string | number | boolean | productData>;
+
+const combined: basicElements = {
+    "section.title": "New Arrivals",
+    "section.id": "section-3944",
+    "section.product.id": {
+        "section.product.id": "product-259",
+        "section.product.name": "Checkered Shirt",
+        "section.product.link": "/products/checkered-shirt",
+        "section.product.language": "EN",
+        "section.product.colourPicker.hasColourPicker": true,
+        "section.product.price.currency": "USD"
+    }
+}
+
+const flatUtil = (combine) => [...Object.entries(combine).map(([key, value]) => typeof value === "string" || typeof value === "boolean" ? Object.assign({}, Object.fromEntries(new Array([key, value]))) : Object.assign({}, ...flatUtil(value)))].flat()
+let combinedFlat = flatUtil(combined)
+const crawler = new CrawlerGenerate()
+const validKeys = crawler.buildsType();
+console.log(JSON.stringify(validKeys,null,2))
+const flatValidKeys = flatUtil(validKeys);
+const isValid = Object.keys(combinedFlat).every(key => key in flatValidKeys);
+expect(isValid).toBe(true);
+expect(crawler.validate(combinedFlat)).toBe(true);
