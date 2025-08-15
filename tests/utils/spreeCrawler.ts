@@ -46,18 +46,6 @@ class CrawlerGenerate {
         return Object.assign({},this.detectBasicTypeElements(),{"section.product": Object.assign({},
            this.detectBasicTypeElements()["section.product"], this.hasColorPicker(),this.hasDiscountPricing())})
     }
-    //     "section.title": "string",
-    //     "section.id": "string",
-    //     "section.product": {
-    //         "section.product.id": "string",
-    //         "section.product.name": "string",
-    //         "section.product.link": "string",
-    //         "section.product.language": "string",
-    //         "section.product.colourPicker.hasColourPicker": "boolean",
-    //         "section.product.price.currency": "string"
-    //     }
-    // }
-
     validate(combined: basicElements): boolean {
         const valid = this.buildsType();
         return Object.keys(combined).every(key => {
