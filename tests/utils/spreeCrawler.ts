@@ -25,16 +25,15 @@ class CrawlerGenerate {
         return {
             "section.title": "string",
             "section.id": "string",
-            "section.product": {
-                "section.product.id": "string",
-                "section.product.name": "string",
-                "section.product.link": "string",
-                "section.product.language": "string",
-            }
+            "section.product.id": "string",
+            "section.product.name": "string",
+            "section.product.link": "string",
+            "section.product.language": "string",
         }
     }
+
     hasDiscountPricing() {
-        return {"section.product.price.currency": "string"}
+        return { "section.product.price.currency": "string" }
     }
     hasColorPicker() {
         return {
@@ -43,11 +42,11 @@ class CrawlerGenerate {
     }
 
     buildsType() {
-        return Object.assign({},this.detectBasicTypeElements(),{"section.product": Object.assign({},
-           this.detectBasicTypeElements()["section.product"], this.hasColorPicker(),this.hasDiscountPricing())})
+        return Object.assign({}, this.detectBasicTypeElements(), this.hasColorPicker(), this.hasDiscountPricing())
     }
     validate(combined: basicElements): boolean {
         const valid = this.buildsType();
+        console.log(JSON.stringify(valid))
         return Object.keys(combined).every(key => {
             key in valid && typeof combined[key] === valid[key];
         })
@@ -68,7 +67,7 @@ type basicElements = Record<string, string | number | boolean | productData>;
 const combined: basicElements = {
     "section.title": "New Arrivals",
     "section.id": "section-3944",
-    "section.product.id": {
+    productIdPlaceHolder: {
         "section.product.id": "product-259",
         "section.product.name": "Checkered Shirt",
         "section.product.link": "/products/checkered-shirt",
@@ -77,13 +76,19 @@ const combined: basicElements = {
         "section.product.price.currency": "USD"
     }
 }
+const { "section.title": sectionTitle,
+    "section.id": sectionId, ...partialObject } = combined as {
+        "section.title": string,
+        "section.id": string,
+    };
 
-const flatUtil = (combine) => [...Object.entries(combine).map(([key, value]) => typeof value === "string" || typeof value === "boolean" ? Object.assign({}, Object.fromEntries(new Array([key, value]))) : Object.assign({}, ...flatUtil(value)))].flat()
-let combinedFlat = flatUtil(combined)
-const crawler = new CrawlerGenerate()
-const validKeys = crawler.buildsType();
-console.log(JSON.stringify(validKeys,null,2))
-const flatValidKeys = flatUtil(validKeys);
-const isValid = Object.keys(combinedFlat).every(key => key in flatValidKeys);
-expect(isValid).toBe(true);
-expect(crawler.validate(combinedFlat)).toBe(true);
+Object.keys(partialObject).map(val => {
+    const subsetProductSection = { "section.title": sectionTitle, ...partialObject[val], 'section.id': sectionId }
+    const crawler = new CrawlerGenerate()
+    expect(crawler.validate(subsetProductSection)).toBe(true);
+})
+
+
+
+
+
