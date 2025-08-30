@@ -21,34 +21,25 @@ type Crawler = {
 }
 class CrawlerGenerate {
     constructor() { }
-    detectBasicTypeElements() {
-        return {
+    validate(combined: basicElements): boolean {
+        const schemaConcreteDictionary = {
             "section.title": "string",
             "section.id": "string",
             "section.product.id": "string",
             "section.product.name": "string",
             "section.product.link": "string",
             "section.product.language": "string",
+            "section.product.colourPicker.hasColourPicker": "boolean",
+            "section.product.price.currency": "string",
+            "section.product.price.hasDiscount": "boolean"
+        } as const
+        type SchemaMap = Record<tryGW, "string" | "number" | "boolean">;
+        let valid: SchemaMap = schemaConcreteDictionary
+        const isTryGW = (key: string | tryGW ): key is tryGW => {
+             return key as tryGW in valid
         }
-    }
-
-    hasDiscountPricing() {
-        return { "section.product.price.currency": "string" }
-    }
-    hasColorPicker() {
-        return {
-            "section.product.colourPicker.hasColourPicker": "boolean"
-        }
-    }
-
-    buildsType() {
-        return Object.assign({}, this.detectBasicTypeElements(), this.hasColorPicker(), this.hasDiscountPricing())
-    }
-    validate(combined: basicElements): boolean {
-        const valid = this.buildsType();
-        console.log(JSON.stringify(valid))
         return Object.keys(combined).every(key => {
-            key in valid && typeof combined[key] === valid[key];
+            return isTryGW(key) && typeof combined[key] === valid[(key)];
         })
     }
 }
