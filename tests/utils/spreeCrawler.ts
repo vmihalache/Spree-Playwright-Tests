@@ -14,6 +14,8 @@ type Crawler = {
             }
             price: {
                 hasDiscount: boolean,
+                regularPrice: string
+                discountPrice: string
                 currency: string,
             }
         }
@@ -31,6 +33,8 @@ class CrawlerGenerate {
             "section.product.language": "string",
             "section.product.colourPicker.hasColourPicker": "boolean",
             "section.product.price.currency": "string",
+            "section.product.price.regularPrice": "string",
+            "section.product.price.discountPrice": "string",
             "section.product.price.hasDiscount": "boolean"
         } as const
         type SchemaMap = Record<tryGW, "string" | "number" | "boolean">;
