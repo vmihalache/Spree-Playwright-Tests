@@ -23,10 +23,9 @@ export class ColourImageObserver {
         observer.disconnect()
     }
     async handleMutation() {
-        await this.page.waitForLoadState('networkidle'); // Wait for network to be idle
+        await this.page.waitForLoadState('networkidle'); 
         await this.page.waitForTimeout(1000);
         await this.page.exposeFunction('notifyNodeOfMutation', async (data) => {
-            // This runs in Node! Not the browser.
             console.log('Browser sent:', data);
             this.mutationDataType = data.mutationDataType;
             this.mutationDataAddedNodes = data.mutationDataAddedNodes
@@ -34,31 +33,39 @@ export class ColourImageObserver {
         })
     }
     async handleObserver(sectionLocator: string) {
-        await this.page.evaluate(async () => {
+        await this.page.evaluate((sectionLocator) => {
             window.observer = new MutationObserver((mutations) => {
                 mutations.forEach((mutation, index) => {
                     // @ts-ignore
                     window.notifyNodeOfMutation({
                         mutationDataType: mutation.type,
-                        mutationDataAddedNodes: Object.values(mutation.addedNodes).length,
-                        mutationDataRemovedNodes: Object.values(mutation.removedNodes).length
+                        mutationDataAddedNodes: mutation.addedNodes.length,
+                        mutationDataRemovedNodes: mutation.removedNodes.length
 
                     })
                 });
             });
-            const targetFrame = document.querySelector(sectionLocator)
-            if (targetFrame) {
-                const locatorImage = targetFrame.querySelector('[data-plp-variant-picker-target="featuredImageContainer"]');
-                console.log(locatorImage)
-                if (locatorImage) {
-                    window.observer.observe(locatorImage, {
-                        subtree: true,
-                        childList: true,
-                        attributes: true
-                    })
+            if (sectionLocator) {
+                const targetFrame = document.querySelector(sectionLocator)
+                if (targetFrame) {
+                    const locatorImage = targetFrame.querySelector('[data-plp-variant-picker-target="featuredImageContainer"]');
+                    if (locatorImage) {
+                        window.observer.observe(locatorImage, {
+                            subtree: true,
+                            childList: true,
+                            attributes: true
+                        })
+
+                        console.log('✅ Observer started on element'); // Debug
+                    } else {
+                        console.log('❌ Image container not found');
+                    }
+                } else {
+                    console.log('❌ Target frame not found');
                 }
             }
-        })
+
+        }, sectionLocator)
     }
     async disconnectObserver() {
         await this.page.evaluate(() => {
