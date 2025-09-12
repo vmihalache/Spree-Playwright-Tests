@@ -1,4 +1,4 @@
-import { Locator, Page, test } from "@playwright/test";
+import {Page} from "@playwright/test";
 export class ColourImageObserver {
     readonly page: Page
     mutationDataType: Object | null = null;
@@ -76,9 +76,3 @@ export class ColourImageObserver {
     }
 }
 
-// const observerTarget = page.locator('[data-plp-variant-picker-target="colorsContainer"]')
-// await observerTarget.locator('[data-variant-id="1440"]').nth(0).hover()
-
-// expect(mutationDataType).toBe('childList');
-// expect(mutationDataAddedNodes).toBe(3);
-// expect(mutationDataRemovedNodes).toBe(3);

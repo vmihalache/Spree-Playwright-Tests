@@ -1,7 +1,7 @@
 import test, { expect } from "@playwright/test";
 import { MainPagePom } from "../pages/mainPagePom";
 import { getMainPagePom } from "../utils/spreeCrawler";
-import { ColourImageObserver } from '../specs/observer.spec'
+import { ColourImageObserver } from '../utils/observer'
 test('should make sure the pom methods work', async ({ page }) => {
     const colourImageObserver = new ColourImageObserver(page)
     const mainPagePom = new MainPagePom(page)
