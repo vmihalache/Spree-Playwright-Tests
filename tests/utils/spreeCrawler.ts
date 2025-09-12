@@ -46,18 +46,19 @@ export class CrawlerGenerate {
         }
         return Object.keys(combined).every(product => {
             return Object.keys(combined[product]).every(key => {
-            return Object.keys(combined[product]).every(key => {
-                if (!isTryGW(key)) {
-                    console.log(`Unexpected key: ${key}`)
-                    return false
-                }
-                const value = combined[product][key]
-                const expected = valid[key]
-                if (typeof value !== expected) {
-                    console.log(`Mismatch at ${key}: expected ${expected}, got ${typeof value}`)
-                    return false
-                }
-                return true
+                return Object.keys(combined[product]).every(key => {
+                    if (!isTryGW(key)) {
+                        console.log(`Unexpected key: ${key}`)
+                        return false
+                    }
+                    const value = combined[product][key]
+                    const expected = valid[key]
+                    if (typeof value !== expected) {
+                        console.log(`Mismatch at ${key}: expected ${expected}, got ${typeof value}`)
+                        return false
+                    }
+                    return true
+                })
             })
         })
     }
@@ -73,6 +74,7 @@ type tryGW = GWS1C<Crawler, "">
 
 type productData = Record<string, string | number | boolean>;
 type basicElements = Record<string, string | number | boolean | productData>;
+
 
 export const getMainPagePom = async (pageParam) => {
     const combined = new MainPagePom(pageParam)
