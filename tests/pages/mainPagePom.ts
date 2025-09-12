@@ -37,7 +37,6 @@ export class MainPagePom {
         this.sectionColour = {}
         for (let m = 0; m < listOfSections.length; m++) {
             await listOfSections[m].scrollIntoViewIfNeeded()
-            await this.page.waitForTimeout(2000)
             const listOffProducts = await listOfSections[m].locator('[data-controller="plp-variant-picker"]').all()
             const sectionId = await listOfSections[m].getAttribute('id')
             this.sectionColour[`${sectionId}`] = []
