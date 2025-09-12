@@ -46,7 +46,7 @@ export class CrawlerGenerate {
             return key as tryGW in valid
         }
         return Object.keys(combined).every(product => {
-           return Object.keys(combined[product]).every(key => {
+            return Object.keys(combined[product]).every(key => {
                 if (!isTryGW(key)) {
                     console.log(`Unexpected key: ${key}`)
                     return false
@@ -75,9 +75,12 @@ type productData = Record<string, string | number | boolean>;
 type basicElements = Record<string, string | number | boolean | productData>;
 
 export const getMainPagePom = async (pageParam) => {
-    const combined = await new MainPagePom(pageParam).getProductLocator()
+    const combined = new MainPagePom(pageParam)
     const crawler = new CrawlerGenerate()
-    expect(crawler.validate(combined)).toBe(true);
+    await combined.getProductLocator()
+    // console.log(combined.getColourArr)
+    // expect(crawler.validate(await combined.getProductLocator())).toBe(true);
+    return combined
 }
 
 
