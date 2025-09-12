@@ -73,10 +73,12 @@ type tryGW = GWS1C<Crawler, "">
 type productData = Record<string, string | number | boolean>;
 type basicElements = Record<string, string | number | boolean | productData>;
 
-export const getMainPagePom = async (pageParam) => {
-    const combined = await new MainPagePom(pageParam).getProductLocator()
+   export const getMainPagePom = async (pageParam) => {
+    const combined = new MainPagePom(pageParam)
+    await combined.getProductLocator()
     return combined
 }
+
 
 
 
