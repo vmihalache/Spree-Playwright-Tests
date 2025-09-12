@@ -1,10 +1,8 @@
 # Spree Playwright Tests
-```
 [![Playwright Tests](https://github.com/vmihalache/Spree-Playwright-Tests/actions/workflows/playwright.yml/badge.svg)](https://github.com/vmihalache/Spree-Playwright-Tests/actions/workflows/playwright.yml)
 ![Node.js version](https://img.shields.io/badge/node-%3E%3D24.0.7-brightgreen)
 ![Playwright](https://img.shields.io/badge/playwright-latest-blue?logo=playwright)
-![GitHub license](https://img.shields.io/github/license/vmihalache/Spree-Playwright-Tests)
-
+```
 End-to-end tests for the [Spree Commerce Demo](https://demo.spreecommerce.org/) site using [Playwright](https://playwright.dev/).
 
 This project validates main page products and tests interactive color switching. Future work will expand to cart and checkout flows.
