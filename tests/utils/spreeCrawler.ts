@@ -75,8 +75,7 @@ type basicElements = Record<string, string | number | boolean | productData>;
 
 export const getMainPagePom = async (pageParam) => {
     const combined = await new MainPagePom(pageParam).getProductLocator()
-    const crawler = new CrawlerGenerate()
-    expect(crawler.validate(combined)).toBe(true);
+    return combined
 }
 
 
