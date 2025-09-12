@@ -46,6 +46,7 @@ export class CrawlerGenerate {
         }
         return Object.keys(combined).every(product => {
             return Object.keys(combined[product]).every(key => {
+            return Object.keys(combined[product]).every(key => {
                 if (!isTryGW(key)) {
                     console.log(`Unexpected key: ${key}`)
                     return false
