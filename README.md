@@ -31,6 +31,7 @@ Each layer is independently testable, promotes reusability, and aligns with clea
 │ └── CrawlerGenerator-layer.md 
 └── documentation/
   └── AI-usage.md # Comprehensive log of AI-assisted architectural and recovery decisions
+
 This is a chart of the Cart/Checkout flows based on design patterns. 
 ┌──────────────┐
 │  collector   │──► Raw Product Data
