@@ -22,4 +22,3 @@ export class Scenario {
     return [this.basicPrice, this.discountPrice].map(elem => Number(elem))
   }
 }
-
