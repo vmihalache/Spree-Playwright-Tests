@@ -6,6 +6,9 @@
 End-to-end tests for the [Spree Commerce Demo](https://demo.spreecommerce.org/) site using [Playwright](https://playwright.dev/).
 
 This project validates main page products and tests interactive color switching. It also covers cart and checkout flows.
+This Playwright automation system is built as a multi-pattern architecture combining Page Object Model, Factory, Builder, Strategy, and Composite principles.
+It provides a modular, maintainable, and extensible foundation for verifying e-commerce cart and checkout logic.
+Each layer is independently testable, promotes reusability, and aligns with clean architecture principles — making it suitable for both exploratory and CI-driven regression testing.
 
 ## Project Structure
 ```
@@ -25,6 +28,48 @@ This project validates main page products and tests interactive color switching.
 │ └── CrawlerGenerator-layer.md
 | └── CrawlerGenerator-layer.md 
 └── AI-usage.md
+
+This is a chart of the Cart/Checkout flows based on design patterns. 
+┌──────────────┐
+│  collector   │──► Raw Product Data
+└──────┬───────┘
+       │
+       ▼
+┌──────────────┐
+│  factory     │──► Filtered Product Objects
+└──────┬───────┘
+       │
+       ▼
+┌──────────────┐
+│  pagePom     │──► Navigation + Data Gathering
+└──────┬───────┘
+       │
+       ▼
+┌──────────────┐
+│ innerView    │──► UI Actions + Element State
+└──────┬───────┘
+       │
+       ▼
+┌──────────────┐
+│ builder      │──► Price Construction
+└──────┬───────┘
+       │
+       ▼
+┌──────────────┐
+│ strategy     │──► Price Calculation
+└──────┬───────┘
+       │
+       ▼
+┌──────────────┐
+│ composite    │──► Cart Validation + Total Comparison
+└──────┬───────┘
+       │
+       ▼
+┌──────────────┐
+│ spec         │──► Final Test Assertion
+└──────────────┘
+
+
 ```
 ## Prerequisites
 ```
