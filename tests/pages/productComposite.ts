@@ -1,6 +1,7 @@
-import { Page } from "@playwright/test"
-import { ProductFactory } from "./productFactory"
+import { BrowserContext, Page } from "@playwright/test"
+import { productData, ProductFactory } from "./productFactory"
 import { CalculatePayment } from "./productStrategy"
+import { ProductInnerView } from "./productInnerView"
 
 interface Calculations {
     gatherCalculations(): Promise<number>
