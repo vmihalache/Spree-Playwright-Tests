@@ -93,8 +93,7 @@ npx playwright test tests/specs/productCartManagement.spec.ts
 ```
 Page Object Model (POM)
 Encapsulates page elements and actions to promote reuse, abstraction, and maintainability.
-Layered Architecture
-Separates concerns into pages, specs, and utils, making it easier to evolve and debug.
+Layered Architecture: Enforces separation of concerns via distinct layers (POM, Collector, Builder/Strategy/Composite), which guarantees high testability, easy maintenance, and clear decoupling between UI actions and business logic.
 
 Current Test Coverage
 ✅ Main page product type validation (CrawlerGenerate class)
