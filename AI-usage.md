@@ -35,6 +35,7 @@ Git strategy
 - Acted as a safety net when branch conflicts arose.
 - Helped you recover after stash mishaps and missing utils.
 - Recommended consolidating to working branches (spreeCrawler + spreeColourObserve) instead of salvaging everything.
+  
 In the CartProcess feature these were the git issue that AI agents tried helping to debug.
 -| Problem Encountered | AI Diagnosis and Strategy | Commands Executed |
 | :--- | :--- | :--- |
