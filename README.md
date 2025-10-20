@@ -5,8 +5,7 @@
 ```
 End-to-end tests for the [Spree Commerce Demo](https://demo.spreecommerce.org/) site using [Playwright](https://playwright.dev/).
 
-This project validates main page products and tests interactive color switching. Future work will expand to cart and checkout flows.
-```
+This project validates main page products and tests interactive color switching. It also covers cart and checkout flows.
 
 ## Project Structure
 ```
@@ -15,11 +14,16 @@ This project validates main page products and tests interactive color switching.
 ├── tests/
 │ ├── observerColour.spec.ts # Tests product colour switch observer
 │ └── testPom.spec.ts # Tests crawler schema validation
+| └── productCartManagement.spec # Cart and checkout flow validation
+| 
+| 
 ├── stories/
 │ └── CrawlerValidator&&CrawlerImageObserver.md
+| └── CartProcessBuyValidator.md
 ├── layers/
 │ ├── ColourImageObserver-layer.md
 │ └── CrawlerGenerator-layer.md
+| └── CrawlerGenerator-layer.md 
 └── AI-usage.md
 ```
 ## Prerequisites
@@ -37,6 +41,7 @@ npx playwright test
 Run a specific file:
 npx playwright test tests/observerColour.spec.ts
 npx playwright test tests/testPom.spec.ts
+npx playwright test tests/specs/productCartManagement.spec.ts
 ```
 
 ## Key Concepts
@@ -49,14 +54,13 @@ Separates concerns into pages, specs, and utils, making it easier to evolve and 
 Current Test Coverage
 ✅ Main page product type validation (CrawlerGenerate class)
 ✅ Colour switching interaction with mutation observer (ColourImageObserver)
-🔜 Cart management and checkout flows
+🔜 Cart management and checkout flows (productCartManagement)
 
 ```
 ## Known Issues / TODO
 ```
 Better logging for crawler schema mismatches
 Add cross-browser stability fixes for Firefox lazy-loaded frames
-Expand coverage to cart operations and checkout
 ```
 ## Notes on AI Assistance
 ```
