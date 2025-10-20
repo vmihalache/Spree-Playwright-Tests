@@ -8,6 +8,7 @@
 | **Spec Layer**             | `productCartManagement.spec.ts`            | *Test Executor*             | Drives the overall test scenario, validates results |
 
 File-by-File Breakdown
+
 🧱 ***collector.ts — Raw Data Collector***
 
 ***Purpose:***

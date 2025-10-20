@@ -35,13 +35,18 @@ Git strategy
 - Acted as a safety net when branch conflicts arose.
 - Helped you recover after stash mishaps and missing utils.
 - Recommended consolidating to working branches (spreeCrawler + spreeColourObserve) instead of salvaging everything.
+  
 In the CartProcess feature these were the git issue that AI agents tried helping to debug.
 -| Problem Encountered | AI Diagnosis and Strategy | Commands Executed |
 | :--- | :--- | :--- |
 | **File Overwritten/Lost** | Identified the need for "Golden File Recovery" using the locally saved text file as the absolute source of truth to bypass corrupted Git history. | `git add <file>`, `git commit -m "fix(integration): Restored correct version..."` |
+
 | **`nothing to commit` Error** | Diagnosed a corrupted Staging Index (`git diff --staged` was empty). Recommended isolating the change by stashing all unrelated files. | `rm filecheck.txt newOutput2.txt`, `git stash push -u -m "Temporary cleanup"`, `git checkout stash@{n} -- <file>` |
+
 | **Branch Segmentation** | Guided the user to segment a single messy set of changes into clean, atomic branches for the Builder, Collector, and Configuration. | `git checkout -b <new-branch>`, `git add <specific files>` |
+
 | **Final Merge Strategy** | Recommended the industry best practice of using a dedicated **Integration Branch** to test all features together before merging to `main`. | `git checkout -b integration/pdp-refactor`, `git merge --squash <feature-branch>`, `git push origin main` |
+
 | **Workflow Justification** | Provided justification for the recovery strategy against potential feedback, emphasizing stability and time-to-solution over mandatory (but risky) `git reflog` dives. | Conceptual advice on professional Git best practices. |
 
 ## Outcomes
