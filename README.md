@@ -11,24 +11,23 @@ It provides a modular, maintainable, and extensible foundation for verifying e-c
 Each layer is independently testable, promotes reusability, and aligns with clean architecture principles — making it suitable for both exploratory and CI-driven regression testing.
 
 ## Project Structure
-```
+
+```File Structure
 /Spree-Playwright-Tests/
 ├── README.md
 ├── tests/
 │ ├── observerColour.spec.ts # Tests product colour switch observer
 │ └── testPom.spec.ts # Tests crawler schema validation
-| └── productCartManagement.spec # Cart and checkout flow validation
-| 
-| 
+│ └── productCartManagement.spec.ts # Cart and checkout flow validation
 ├── stories/
 │ └── CrawlerValidator&&CrawlerImageObserver.md
-| └── CartProcessBuyValidator.md
+│ └── CartProcessBuyValidator.md
 ├── layers/
 │ ├── ColourImageObserver-layer.md
 │ └── CrawlerGenerator-layer.md
-| └── CrawlerGenerator-layer.md 
-└── AI-usage.md
-```
+│ └── CrawlerGenerator-layer.md 
+└── documentation/
+  └── AI-usage.md # Comprehensive log of AI-assisted architectural and recovery decisions
 This is a chart of the Cart/Checkout flows based on design patterns. 
 ┌──────────────┐
 │  collector   │──► Raw Product Data
@@ -106,6 +105,10 @@ Current Test Coverage
 ```
 Better logging for crawler schema mismatches
 Add cross-browser stability fixes for Firefox lazy-loaded frames
+Refactor productInnerView.ts Waits: Replace all fixed waitForTimeout(1000) calls with conditional, smart waiters (e.g., page.waitForSelector, page.waitForFunction) to eliminate unnecessary waiting time and reduce test flakiness.
+Implement Strategy Integrity Checks: In productStrategy.ts, integrate a precise arithmetic library (e.g., decimal.js) to handle floating point math (price calculations) and eliminate potential rounding errors in final total validation.
+Add Exit Guard to Collector Recursion: Modify collector.ts to include a maximum retry/recursion depth to prevent indefinite loops when the product data endpoint is permanently unavailable or corrupted.
+Expand Checkout Flow Coverage: Add a new spec to test the complete checkout process, including guest checkout, shipping address input, and final order confirmation (beyond just cart validation).
 ```
 ## Notes on AI Assistance
 ```
