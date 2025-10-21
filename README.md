@@ -22,15 +22,20 @@ Each layer is independently testable, promotes reusability, and aligns with clea
 │ ├── observerColour.spec.ts # Tests product colour switch observer
 │ └── testPom.spec.ts # Tests crawler schema validation
 │ └── productCartManagement.spec.ts # Cart and checkout flow validation
-├── stories/
-│ └── CrawlerValidator&&CrawlerImageObserver.md
-│ └── CartProcessBuyValidator.md
-├── layers/
-│ ├── ColourImageObserver-layer.md
-│ └── CrawlerGenerator-layer.md
-│ └── CrawlerGenerator-layer.md 
 └── documentation/
-  └── AI-usage.md # Comprehensive log of AI-assisted architectural and recovery decisions
+stories/
+│ ├── CrawlerValidator&&CrawlerImageObserver.md
+│ └── CartProcessBuyValidator.md
+layers/
+│ ├── ColourImageObserver-layer.md
+  └── CartProcess-layer
+│ └── CrawlerGenerator-layer.md
+│ └── CrawlerValidator-layer-layer.md 
+prompts/
+  ├── CartProcess-prompt.md
+  └── ColourImageObserver-prompt.md
+  └── CrawlerGenerate-prompt.md
+AI-usage.md # Comprehensive log of AI-assisted architectural and recovery decisions
 
 This is a chart of the Cart/Checkout flows based on design patterns. 
 ┌──────────────┐
